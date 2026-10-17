@@ -20,7 +20,11 @@ namespace MiniGame
                 return;
 
             if (IsCommandMovement(input.command, out Direction direction))
-                Move(direction);
+            {
+                bool hasMoved = Move(direction);
+                if(hasMoved)
+                    MiniGameController.Instance.MarkInputAsUsed();
+            }
         }
 
         bool IsCommandMovement(MiniGameCommand cmd, out Direction direction)
@@ -45,6 +49,11 @@ namespace MiniGame
             }
 
             return true;
+        }
+
+        protected override void TriedToMoveIntoWall()
+        {
+            MiniGameController.Instance.ThrowError();
         }
     }
 }

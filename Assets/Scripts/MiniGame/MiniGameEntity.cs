@@ -29,7 +29,11 @@ namespace MiniGame
         {
         }
 
-        public void Move(Direction direction)
+        protected virtual void TriedToMoveIntoWall()
+        {
+        }
+
+        public bool Move(Direction direction)
         {
             Vector2Int displacement;
             switch (direction)
@@ -53,12 +57,17 @@ namespace MiniGame
 
             //Check if move possible
             if (!CanMoveToCoords(targetCoords))
-                return;
+            {
+                TriedToMoveIntoWall();
+                return false;
+            }
 
             //Effective move
             lastMoveDirection = direction;
             currentCoords = targetCoords;
             UpdatePosition();
+
+            return true;
         }
 
         protected void UpdatePosition()

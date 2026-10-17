@@ -1,12 +1,17 @@
 using MiniGame;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MinigGame
 {
     public class MiniGameDialogueManager : MonoBehaviour
     {
+        [Header("Main")]
         [SerializeField] GameObject dialoguePanel;
+        [SerializeField] Image talkableImage;
+
+        [Header("Texts")]
         [SerializeField] UITypewriter greetingsTypewriter;
         [SerializeField] TextMeshProUGUI playerInputText;
         [SerializeField] UITypewriter reactionTypewriter;
@@ -45,11 +50,21 @@ namespace MinigGame
             switch (input.command)
             {
                 case MiniGameCommand.Talk:
+                    if (IsDialogueOn)
+                    {
+                        MiniGameController.Instance.ThrowError();
+                        return;
+                    }
                     Vector2Int playerCoords = MiniGamePlayer.Instance.currentCoords;
                     TryEnteringDialogue(playerCoords);
+                    MiniGameController.Instance.MarkInputAsUsed();
                     return;
                 case MiniGameCommand.Leave:
-                    LeaveDialogue();
+                    if (IsDialogueOn)
+                    {
+                        LeaveDialogue();
+                        MiniGameController.Instance.MarkInputAsUsed();
+                    }
                     return;
             }
 
@@ -84,6 +99,7 @@ namespace MinigGame
             greetingsTypewriter.Clear();
             playerInputText.text = "";
             dialoguePanel.SetActive(true);
+            talkableImage.sprite = currentTalkable.sprite;
 
             greetingsTypewriter.DisplayText(talkable.dialogueData.greetings);
         }
@@ -109,6 +125,8 @@ namespace MinigGame
             //Add letter
             playerInputString += letter;
             playerInputText.text = "> " + playerInputString;
+
+            MiniGameController.Instance.MarkInputAsUsed();
 
             if (currentTalkable.IsPlayerInputCorrect(playerInputString))
             {

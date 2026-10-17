@@ -11,6 +11,7 @@ public class UITypewriter : MonoBehaviour
     void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
+        Clear();
     }
 
     public void DisplayText(string str)
@@ -20,6 +21,8 @@ public class UITypewriter : MonoBehaviour
 
     public void Clear()
     {
+        if (text == null)
+            return;
         text.text = "";
     }
 

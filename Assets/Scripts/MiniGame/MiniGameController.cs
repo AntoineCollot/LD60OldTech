@@ -10,6 +10,7 @@ namespace MiniGame
         public static MiniGameController Instance;
         public static event Action<MiniGameInput> onMiniGameUpdate;
         public static int frame;
+        bool hasUsedInputThisFrame;
 
         MiniGameCommand currentKeyboardCommand;
 
@@ -39,6 +40,7 @@ namespace MiniGame
         void ProcessFrame(MiniGameInput input)
         {
             frame++;
+            hasUsedInputThisFrame = false;
 
             onMiniGameUpdate?.Invoke(input);
         }
@@ -46,6 +48,16 @@ namespace MiniGame
         void RestartMiniGame()
         {
             frame = 0;
+        }
+
+        public void ThrowError()
+        {
+            //Todo
+        }
+
+        public void MarkInputAsUsed()
+        {
+            hasUsedInputThisFrame = true;
         }
 
         MiniGameCommand GetCommandFromKeyboard()

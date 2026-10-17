@@ -6,8 +6,16 @@ namespace MiniGame
     {
         public DialogueData dialogueData;
 
-        public enum ReactionCommand { None, MoveUp, MoveRight, MoveDown, MoveLeft}
+        public enum ReactionCommand { None, MoveUp, MoveRight, MoveDown, MoveLeft }
         public ReactionCommand reactionCommand;
+
+        public Sprite sprite
+        {
+            get
+            {
+                return GetComponentInChildren<SpriteRenderer>().sprite;
+            }
+        }
 
         public bool IsPlayerInputCorrect(string str)
         {
@@ -16,7 +24,7 @@ namespace MiniGame
 
         public void LeavingDialogue(bool hasReactionBeenPerformed)
         {
-            if(hasReactionBeenPerformed)
+            if (hasReactionBeenPerformed)
                 PerformReactionCommand(reactionCommand);
         }
 
