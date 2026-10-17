@@ -1,0 +1,50 @@
+using MinigGame;
+using UnityEngine;
+
+namespace MiniGame
+{
+    public class MiniGamePlayer : MiniGameEntity
+    {
+        public static MiniGamePlayer Instance;
+
+        override  protected void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+
+        protected override void OnGameUpdate(MiniGameInput input)
+        {
+            //Don't move during dialogues
+            if (MiniGameDialogueManager.Instance.IsDialogueOn)
+                return;
+
+            if (IsCommandMovement(input.command, out Direction direction))
+                Move(direction);
+        }
+
+        bool IsCommandMovement(MiniGameCommand cmd, out Direction direction)
+        {
+            switch (cmd)
+            {
+                case MiniGameCommand.MoveUp:
+                    direction = Direction.Up;
+                    break;
+                case MiniGameCommand.MoveRight:
+                    direction = Direction.Right;
+                    break;
+                case MiniGameCommand.MoveDown:
+                    direction = Direction.Down;
+                    break;
+                case MiniGameCommand.MoveLeft:
+                    direction = Direction.Left;
+                    break;
+                default:
+                    direction = Direction.Up;
+                    return false;
+            }
+
+            return true;
+        }
+    }
+}
