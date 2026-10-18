@@ -6,13 +6,14 @@ namespace MiniGame
 {
     public class MiniGameController : MonoBehaviour
     {
-
         public static MiniGameController Instance;
         public static event Action<MiniGameInput> onMiniGameUpdate;
         public static int frame;
         bool hasUsedInputThisFrame;
 
         MiniGameCommand currentKeyboardCommand;
+
+        public static event Action onError;
 
         void Start()
         {
@@ -37,12 +38,15 @@ namespace MiniGame
             }
         }
 
-        void ProcessFrame(MiniGameInput input)
+        public void ProcessFrame(MiniGameInput input)
         {
             frame++;
             hasUsedInputThisFrame = false;
 
             onMiniGameUpdate?.Invoke(input);
+
+            if (!hasUsedInputThisFrame && input.id != 0)
+                onError?.Invoke();
         }
 
         void RestartMiniGame()

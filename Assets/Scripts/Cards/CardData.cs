@@ -7,13 +7,16 @@ public class CardData
     public bool[,] punches;
     public Texture2D texture { get; private set; }
 
-    const int DIGIT_COUNT = 5;
-    const int COLUMN_COUNT = 12;
+    public const int DIGIT_COUNT = 5;
+    public const int COLUMN_COUNT = 12;
+
+    public bool isEmpty;
 
     public CardData()
     {
         punches = new bool[COLUMN_COUNT, DIGIT_COUNT];
-        texture = new Texture2D(12, 5, TextureFormat.R8, false);
+        texture = new Texture2D(12, 5, TextureFormat.ARGB32, false);
+        isEmpty = true;
         ClearTexture();
     }
 
@@ -22,6 +25,8 @@ public class CardData
         punches[column, digit] = true;
         texture.SetPixel(column, digit, Color.black);
         texture.Apply();
+
+        isEmpty = false;
     }
 
     public void RemovePunch(int digit, int column)
@@ -41,6 +46,7 @@ public class CardData
             }
         }
         ClearTexture();
+        isEmpty = true;
     }
 
     void ClearTexture()
@@ -59,5 +65,36 @@ public class CardData
     public void SetDescription(string description)
     {
         this.description = description;
+    }
+
+    public void HoverHole(int digit, int column)
+    {
+        //No hover on punched
+        if (punches[column, digit])
+            return;
+
+        texture.SetPixel(column, digit, Color.red);
+        texture.Apply();
+    }
+
+    public void ClearHover(int digit, int column)
+    {
+        //No hover on punched
+        if (punches[column, digit])
+            return;
+
+        texture.SetPixel(column, digit, Color.white);
+        texture.Apply();
+    }
+
+    public int GetColumnValue(int column)
+    {
+        int value = 0;
+        for (int d = 0; d < DIGIT_COUNT; d++)
+        {
+            if (punches[column, d])
+                value += 1 << DIGIT_COUNT - d - 1;
+        }
+        return value;
     }
 }

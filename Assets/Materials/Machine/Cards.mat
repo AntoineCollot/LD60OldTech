@@ -8,19 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Cards
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 721c360d75282a045995b0db17826a8b,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _EMISSION
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -103,6 +101,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EmptyAmount: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -111,6 +110,7 @@ Material:
     - _GridMultY: 1.435
     - _GridSizeX: 0.0409
     - _GridSizeY: 0.0663
+    - _HoveredAmount: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

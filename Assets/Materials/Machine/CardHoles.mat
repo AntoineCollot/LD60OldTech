@@ -26,7 +26,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _HoleTex:
-        m_Texture: {fileID: 2800000, guid: 6bf65e45a66fa624aa605775cee77550, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -51,10 +51,12 @@ Material:
     - _GridMultY: 1.435
     - _GridSizeX: 0.0409
     - _GridSizeY: 0.0663
+    - _HoverStrength: 0.297
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
     - _GridSize: {r: 0.04, g: 0.1, b: 0, a: 0}
+    - _HoverUV: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: -0.01, g: -0.03, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

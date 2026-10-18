@@ -4,13 +4,13 @@ namespace MiniGame
 {
     public enum MiniGameCommand
     {
-        None,
-        MoveUp,
-        MoveRight,
-        MoveDown,
-        MoveLeft,
-        Talk,
-        Leave,
+        None = 0,
+        MoveUp = 1,
+        MoveRight = 2,
+        MoveDown =3,
+        MoveLeft = 4,
+        Talk = 27,
+        Leave = 28,
     }
 
     [Serializable]
