@@ -9,6 +9,8 @@ public class ComputerScreen : MonoBehaviour
 
     [SerializeField] bool debugStartOn;
 
+    Light screenLight;
+    float baseIntensity;
     Material mat;
 
     static readonly int DISPLAY_PROPERTY = Shader.PropertyToID("_Display");
@@ -20,6 +22,9 @@ public class ComputerScreen : MonoBehaviour
         if(!debugStartOn)
 #endif
         mat.SetFloat(DISPLAY_PROPERTY, currentDisplay);
+
+        screenLight = GetComponentInChildren<Light>();
+        baseIntensity = screenLight.intensity;
     }
 
     void Update()
@@ -34,5 +39,7 @@ public class ComputerScreen : MonoBehaviour
             currentDisplay = Mathf.SmoothDamp(currentDisplay, targetDisplay, ref refDisplay, SMOOTH);
             mat.SetFloat(DISPLAY_PROPERTY, currentDisplay);
         }
+
+        screenLight.intensity = currentDisplay * baseIntensity;
     }
 }

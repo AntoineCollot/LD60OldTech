@@ -51,7 +51,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < CARD_COUNT; i++)
         {
             cardObjects[i] = Instantiate(cardPrefab, transform);
-            cardData[i] = new CardData();
+            cardData[i] = new CardData(i);
             cardObjects[i].SetData(cardData[i], i);
             idleCardPosition[i] = idleLayout.GetChild(i).GetComponent<CardIdlePosition>();
         }

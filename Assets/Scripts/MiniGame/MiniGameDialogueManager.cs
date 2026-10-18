@@ -112,11 +112,15 @@ namespace MinigGame
             dialoguePanel.SetActive(true);
             talkableImage.sprite = currentTalkable.sprite;
 
+            SFXManager.PlaySound(GlobalSFX.MiniGameTalk);
+
             greetingsTypewriter.DisplayText(talkable.dialogueData.greetings);
         }
 
         public void LeaveDialogue()
         {
+            SFXManager.PlaySound(GlobalSFX.MiniGameLeave);
+
             currentTalkable.LeavingDialogue(hasReactionBeenPerformed);
 
             Hide();

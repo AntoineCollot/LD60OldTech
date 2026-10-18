@@ -30,7 +30,10 @@ public class MachineButton : MonoBehaviour, ISelectable
         SetOnWithoutNotifying(newIsOn);
         onValueChanged?.Invoke(isOn);
 
-        SFXManager.PlaySound(GlobalSFX.MachineButtonClick);
+        if(isOn)
+            SFXManager.PlaySound(GlobalSFX.MachineButtonClick);
+        else
+            SFXManager.PlaySound(GlobalSFX.MachineButtonUnClick);
     }
 
     public void SetOnWithoutNotifying(bool newIsOn)

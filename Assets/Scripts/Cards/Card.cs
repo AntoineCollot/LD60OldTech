@@ -134,6 +134,9 @@ public class Card : MonoBehaviour, ISelectable
 
     public virtual void OnSelect(Vector2 uv)
     {
+        if (!CardManager.Instance.IsInViewMode)
+            return;
+
         if (!isSelected)
             CardManager.Instance.SetSelected(this);
         else

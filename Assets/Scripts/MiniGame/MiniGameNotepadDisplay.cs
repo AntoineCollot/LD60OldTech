@@ -34,6 +34,8 @@ namespace MiniGame
         {
             panel.SetActive(true);
             text.text = notepadInput;
+
+            SFXManager.PlaySound(GlobalSFX.Notepad);
         }
 
         public void Hide()

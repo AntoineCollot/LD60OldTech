@@ -18,6 +18,7 @@ public class RightClickText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        text.enabled = CardManager.Instance.IsInViewMode;
         if(CardManager.Instance.cardOrders == null || CardManager.Instance.cardOrders.Count == 0)
         {
             glowText.Glow();

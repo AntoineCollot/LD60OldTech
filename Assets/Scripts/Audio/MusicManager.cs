@@ -22,15 +22,25 @@ public class MusicManager : MonoBehaviour
 
         source = GetComponent<AudioSource>();
     }
-	
-  public void Mute(bool value)
-  {
-      isMuted = value;
-      source.mute = isMuted;
-  }
 
-  public void ToggleMute()
-  {
-      Mute(!isMuted);
-  }
+    public void Mute(bool value)
+    {
+        isMuted = value;
+        source.mute = isMuted;
+    }
+
+    public void ToggleMute()
+    {
+        Mute(!isMuted);
+    }
+
+    public void PlayMusic()
+    {
+        source.Play();
+    }
+
+    public void StopMusic()
+    {
+        source.Stop();
+    }
 }

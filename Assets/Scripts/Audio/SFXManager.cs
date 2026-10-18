@@ -19,9 +19,13 @@ public enum GlobalSFX
     CardUnpunch,
     CardChangeOrder,
     MachineButtonClick,
+    MachineButtonUnClick,
     MachineCardProcessedStarted,
     MachineCardProcessedFinished,
     MachineNoCard,
+    ScreenOn,
+    ScreenOf,
+    Notepad,
 }
 public class SFXManager : MonoBehaviour
 {

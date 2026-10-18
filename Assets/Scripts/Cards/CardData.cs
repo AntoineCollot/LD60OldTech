@@ -12,11 +12,12 @@ public class CardData
 
     public bool isEmpty;
 
-    public CardData()
+    public CardData(int id)
     {
         punches = new bool[COLUMN_COUNT, DIGIT_COUNT];
         texture = new Texture2D(12, 5, TextureFormat.ARGB32, false);
         isEmpty = true;
+        description = "GameCard " + id;
         ClearTexture();
     }
 

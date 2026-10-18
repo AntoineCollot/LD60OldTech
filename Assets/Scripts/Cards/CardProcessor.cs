@@ -13,6 +13,7 @@ public class CardProcessor : MonoBehaviour
     bool IsUsingTurbo => turboButton.isOn;
     public bool isRunning { get; private set; }
     public bool isPaused { get; private set; }
+    public bool isFinishedButRunning { get; private set; }
 
     [Header("Buttons")]
     [SerializeField] MachineButton runButton;
@@ -20,11 +21,15 @@ public class CardProcessor : MonoBehaviour
     [SerializeField] MachineButton turboButton;
     [SerializeField] MachineLED errorLed;
 
+    //Audio
+    AudioSource source;
+
     public static CardProcessor Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        source = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -70,7 +75,10 @@ public class CardProcessor : MonoBehaviour
 
         pauseButton.SetOn(false);
         MiniGameController.Instance.ResetGame();
+        SFXManager.PlaySound(GlobalSFX.ScreenOn);
 
+        source.Play();
+        MusicManager.Instance.PlayMusic();
         StopAllCoroutines();
         StartCoroutine(ProcessCardsC(dataToPlay));
 
@@ -79,6 +87,7 @@ public class CardProcessor : MonoBehaviour
 
     IEnumerator ProcessCardsC(List<CardData> dataToPlay)
     {
+        isFinishedButRunning = false;
         isRunning = true;
         yield return new WaitForSeconds(startTime);
 
@@ -87,12 +96,15 @@ public class CardProcessor : MonoBehaviour
             yield return StartCoroutine(ProcessCard(dataToPlay[i], i == dataToPlay.Count - 1));
         }
 
-        yield return new WaitForSeconds(1);
+        isFinishedButRunning = true;
+        source.Stop();
 
-        //CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
-        runButton.SetOn(false);
-        isRunning = false;
-        Debug.Log("Finished Processing!");
+        //yield return new WaitForSeconds(1);
+
+        ////CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
+        //runButton.SetOn(false);
+        //isRunning = false;
+        //Debug.Log("Finished Processing!");
     }
 
     IEnumerator ProcessCard(CardData data, bool isLastCard)
@@ -141,7 +153,15 @@ public class CardProcessor : MonoBehaviour
 
     public void StopRun()
     {
+        if (isRunning)
+            SFXManager.PlaySound(GlobalSFX.ScreenOf);
+
+        MusicManager.Instance.StopMusic();
         isRunning = false;
+        source.Stop();
+        isFinishedButRunning = false;
+
+        // CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
         StopAllCoroutines();
     }
 

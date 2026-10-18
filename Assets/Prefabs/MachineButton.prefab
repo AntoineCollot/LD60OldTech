@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573e65fd096ec384e9940d132355312f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineButton
-  handleAngle: 42
+  handleAngle: -42
   handle: {fileID: 3649070256020253158}
   isOn: 0
 --- !u!65 &2352914147585697444
