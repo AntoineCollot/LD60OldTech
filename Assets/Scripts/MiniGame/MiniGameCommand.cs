@@ -29,11 +29,15 @@ namespace MiniGame
         public int id;
         public MiniGameCommand command;
         public char letter;
+        public bool HasLetter => letter != ' ';
 
         public static char IdToLetter(int id)
         {
+            if (id == 0 || id > 26)
+                return ' ';
+
             int asciiStart = (int)'A';
-            return (char)(asciiStart + id);
+            return (char)(asciiStart + id - 1);
         }
     }
 }

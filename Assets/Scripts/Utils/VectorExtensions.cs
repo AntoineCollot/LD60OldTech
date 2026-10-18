@@ -7,7 +7,12 @@ public static class VectorExtensions
 {
     public static Vector2Int ToCoords(this Vector3 v)
     {
-        return new Vector2Int(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y));
+        Vector2Int coords = new Vector2Int(Mathf.FloorToInt(v.x), Mathf.FloorToInt(v.y));
+        //if (v.x < 0)
+        //    coords.x--;
+        //if (v.y < 0)
+        //    coords.y--;
+        return coords;
     }
 
     public static Vector2 ToCenterOfTile(this Vector2Int v)

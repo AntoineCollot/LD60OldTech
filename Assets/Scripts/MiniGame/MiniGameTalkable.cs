@@ -54,8 +54,8 @@ namespace MiniGame
     [System.Serializable]
     public struct DialogueData
     {
-        public string greetings;
+        [TextArea(5, 10)] public string greetings;
         public string listenFor;
-        public string reaction;
+        [TextArea(5, 10)] public string reaction;
     }
 }

@@ -9,6 +9,10 @@ namespace MiniGame
 
         override  protected void Awake()
         {
+#if !UNITY_EDITOR //Reset pos
+            ResetPos();
+#endif
+
             base.Awake();
             Instance = this;
         }
@@ -23,8 +27,17 @@ namespace MiniGame
             {
                 bool hasMoved = Move(direction);
                 if(hasMoved)
+                {
                     MiniGameController.Instance.MarkInputAsUsed();
+                    SFXManager.PlaySound(GlobalSFX.MiniGameMove);
+                }
             }
+        }
+
+        [ContextMenu("ResetPos")]
+        public void ResetPos()
+        {
+            transform.position = Vector2.one * 0.5f;
         }
 
         bool IsCommandMovement(MiniGameCommand cmd, out Direction direction)

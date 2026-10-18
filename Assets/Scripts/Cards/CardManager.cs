@@ -12,6 +12,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform idleLayout;
     [SerializeField] Transform hidePosition;
     [SerializeField] Transform selectedPosition;
+    [SerializeField] Transform processedCardPosition;
     CardIdlePosition[] idleCardPosition;
     const int CARD_COUNT = 12;
 
@@ -55,13 +56,16 @@ public class CardManager : MonoBehaviour
             idleCardPosition[i] = idleLayout.GetChild(i).GetComponent<CardIdlePosition>();
         }
 
-        SetMode(ViewMode.Show);
+        SetMode(ViewMode.Hide, true);
     }
 
-    public void SetMode(ViewMode mode)
+    public void SetMode(ViewMode mode, bool force = false)
     {
-        if (currentMode == mode)
+        if (currentMode == mode && !force)
             return;
+
+        if (CardProcessor.Instance.isRunning && mode == ViewMode.Show)
+            return; // Don't allow show mode during runtime
 
         currentMode = mode;
         switch (mode)
@@ -103,6 +107,8 @@ public class CardManager : MonoBehaviour
         lastSelectedCardID = selectedCardID;
         card.SetPosition(selectedPosition, true);
         ClearCurrentHover();
+
+        SFXManager.PlaySound(GlobalSFX.CardSelect);
     }
 
     public void ToggleMode()
@@ -121,7 +127,7 @@ public class CardManager : MonoBehaviour
 
     public void PunchCard(Card card, int digit, int column)
     {
-        cardData[card.id].AddPunch(digit, column);
+        cardData[card.id].TogglePunch(digit, column);
     }
 
     public void HoverHole(Card card, int digit, int column)
@@ -187,6 +193,8 @@ public class CardManager : MonoBehaviour
         cardData[lastSelectedCardID].Clear();
         cardObjects[lastSelectedCardID].UpdateEmptyState();
         SetAllToViewMode();
+
+        SFXManager.PlaySound(GlobalSFX.CardDelete);
     }
 
     public List<CardData> GetCardsToPlay()
@@ -199,5 +207,10 @@ public class CardManager : MonoBehaviour
         }
 
         return dataToPlay;
+    }
+    public void SetProcessedCardPosition(CardData data)
+    {
+        int id = Array.IndexOf(cardData, data);
+        cardObjects[id].SetPosition(processedCardPosition, false);
     }
 }

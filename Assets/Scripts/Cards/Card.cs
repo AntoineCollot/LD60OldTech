@@ -107,7 +107,10 @@ public class Card : MonoBehaviour, ISelectable
     public void OnHoverEnter()
     {
         if (!isSelected)
+        {
             cardRend.material.SetFloat(HOVER_PROPERTY, 1);
+            SFXManager.PlaySound(GlobalSFX.CardHover);
+        }
     }
 
     public virtual void OnHoverStay(Vector2 uv)
@@ -149,5 +152,6 @@ public class Card : MonoBehaviour, ISelectable
     public virtual void OnRightClick()
     {
         CardManager.Instance.ToggleCardOrder(this);
+        SFXManager.PlaySound(GlobalSFX.CardChangeOrder);
     }
 }

@@ -198,7 +198,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_4
+      name: Spritesheet_Ptero0
       rect:
         serializedVersion: 2
         x: 64
@@ -374,7 +374,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_12
+      name: Spritesheet_Ptero1
       rect:
         serializedVersion: 2
         x: 64
@@ -396,7 +396,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_13
+      name: Spritesheet_Heart0
       rect:
         serializedVersion: 2
         x: 80
@@ -418,7 +418,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_14
+      name: Spritesheet_Heart1
       rect:
         serializedVersion: 2
         x: 96
@@ -572,7 +572,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_21
+      name: Spritesheet_PlayerHappy
       rect:
         serializedVersion: 2
         x: 80
@@ -704,7 +704,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_27
+      name: Spritesheet_Notepad
       rect:
         serializedVersion: 2
         x: 48
@@ -726,7 +726,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_28
+      name: Spritesheet_Egg0
       rect:
         serializedVersion: 2
         x: 64
@@ -748,7 +748,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_29
+      name: Spritesheet_Egg1
       rect:
         serializedVersion: 2
         x: 80
@@ -1533,22 +1533,15 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Spritesheet_12: 1104138301
-      Spritesheet_13: -1181022341
-      Spritesheet_14: 453778971
       Spritesheet_15: 443661918
       Spritesheet_16: -269973457
       Spritesheet_18: 442627983
       Spritesheet_19: 460995190
       Spritesheet_20: -941755141
-      Spritesheet_21: -1789919097
       Spritesheet_22: -570777040
       Spritesheet_23: -148488371
       Spritesheet_24: 839917058
       Spritesheet_26: 526218724
-      Spritesheet_27: -2144875914
-      Spritesheet_28: 1215179165
-      Spritesheet_29: 129122817
       Spritesheet_30: -707649621
       Spritesheet_31: 1873525681
       Spritesheet_32: -1999833951
@@ -1559,7 +1552,6 @@ TextureImporter:
       Spritesheet_37: -290460986
       Spritesheet_38: -1804598202
       Spritesheet_39: -481887222
-      Spritesheet_4: -1099212960
       Spritesheet_40: 1127776286
       Spritesheet_41: -1346884609
       Spritesheet_42: 1930144411
@@ -1589,8 +1581,16 @@ TextureImporter:
       Spritesheet_7: -377725942
       Spritesheet_Diplo0: -2041681594
       Spritesheet_Diplo1: -811578200
+      Spritesheet_Egg0: 1215179165
+      Spritesheet_Egg1: 129122817
+      Spritesheet_Heart0: -1181022341
+      Spritesheet_Heart1: 453778971
+      Spritesheet_Notepad: -2144875914
       Spritesheet_Player0: 1394290018
       Spritesheet_Player1: -1082327940
+      Spritesheet_PlayerHappy: -1789919097
+      Spritesheet_Ptero0: -1099212960
+      Spritesheet_Ptero1: 1104138301
       Spritesheet_Tri0: 1442919570
       Spritesheet_Tri1: -226665303
       Spritesheet_WallEmpty: 1669929336

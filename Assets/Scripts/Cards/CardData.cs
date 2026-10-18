@@ -20,8 +20,18 @@ public class CardData
         ClearTexture();
     }
 
+    public void TogglePunch(int digit, int column)
+    {
+        if (punches[column, digit])
+            RemovePunch(digit, column);
+        else
+            AddPunch(digit, column);
+    }
+
     public void AddPunch(int digit, int column)
     {
+        SFXManager.PlaySound(GlobalSFX.CardPunch);
+
         punches[column, digit] = true;
         texture.SetPixel(column, digit, Color.black);
         texture.Apply();
@@ -31,6 +41,8 @@ public class CardData
 
     public void RemovePunch(int digit, int column)
     {
+        SFXManager.PlaySound(GlobalSFX.CardUnpunch);
+
         punches[column, digit] = false;
         texture.SetPixel(column, digit, Color.white);
         texture.Apply();

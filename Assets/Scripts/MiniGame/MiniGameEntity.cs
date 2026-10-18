@@ -1,31 +1,56 @@
+using System;
 using UnityEngine;
 
 namespace MiniGame
 {
     public abstract class MiniGameEntity : MonoBehaviour
     {
+        public Vector2Int originalCoords;
         public Vector2Int currentCoords;
         public Direction lastMoveDirection { get; private set; }
+        public bool isObstacle = true;
 
         protected virtual void Awake()
         {
             currentCoords = transform.position.ToCoords();
+            originalCoords = currentCoords;
             UpdatePosition();
+
+            MiniGameController.onGameReset += OnGameReset;
+        }
+
+        protected void OnDestroy()
+        {
+            MiniGameController.onGameReset -= OnGameReset;
         }
 
         protected virtual void OnEnable()
         {
             MiniGameController.onMiniGameUpdate += OnGameUpdate;
-            MiniGameMap.Instance.Register(this);
+            MiniGameController.onMiniGameLateUpdate += OnGameLateUpdate;
+            if (isObstacle)
+                MiniGameMap.Instance.Register(this);
         }
 
         protected virtual void OnDisable()
         {
             MiniGameController.onMiniGameUpdate -= OnGameUpdate;
-            MiniGameMap.Instance.Deregister(this);
+            MiniGameController.onMiniGameLateUpdate -= OnGameLateUpdate;
+            if (isObstacle)
+                MiniGameMap.Instance.Deregister(this);
+        }
+
+        protected virtual void OnGameReset()
+        {
+            currentCoords = originalCoords;
+            UpdatePosition();
         }
 
         protected virtual void OnGameUpdate(MiniGameInput input)
+        {
+        }
+
+        protected virtual void OnGameLateUpdate(MiniGameInput input)
         {
         }
 

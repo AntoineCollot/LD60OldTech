@@ -7,22 +7,21 @@ using UnityEditor;
 
 public enum GlobalSFX
 {
-    Jump,
-    Land,
-    EnemyDeath,
-    CatKill,
-    EagleKill,
-    CatAttack,
-    EagleAttack,
-    Hit,
-    Slide,
-    Kick,
-    Dive,
-    DiveLanding,
-    PlayerDeath,
-    ButtonClick,
-    ProjectileExplosion,
-    LevelCleared,
+    MiniGameMove,
+    MiniGameTalk,
+    MiniGameLeave,
+    MiniGameError,
+    CardDelete,
+    CardHover,
+    CardSelect,
+    CardViewModeChanged,
+    CardPunch,
+    CardUnpunch,
+    CardChangeOrder,
+    MachineButtonClick,
+    MachineCardProcessedStarted,
+    MachineCardProcessedFinished,
+    MachineNoCard,
 }
 public class SFXManager : MonoBehaviour
 {

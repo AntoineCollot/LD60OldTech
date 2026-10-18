@@ -8,12 +8,14 @@ namespace MiniGame
     {
         public static MiniGameController Instance;
         public static event Action<MiniGameInput> onMiniGameUpdate;
+        public static event Action<MiniGameInput> onMiniGameLateUpdate;
         public static int frame;
         bool hasUsedInputThisFrame;
 
         MiniGameCommand currentKeyboardCommand;
 
         public static event Action onError;
+        public static event Action onGameReset;
 
         void Start()
         {
@@ -44,9 +46,13 @@ namespace MiniGame
             hasUsedInputThisFrame = false;
 
             onMiniGameUpdate?.Invoke(input);
+            onMiniGameLateUpdate?.Invoke(input);
 
             if (!hasUsedInputThisFrame && input.id != 0)
+            {
+                SFXManager.PlaySound(GlobalSFX.MiniGameError);
                 onError?.Invoke();
+            }
         }
 
         void RestartMiniGame()
@@ -62,6 +68,11 @@ namespace MiniGame
         public void MarkInputAsUsed()
         {
             hasUsedInputThisFrame = true;
+        }
+
+        public void ResetGame()
+        {
+            onGameReset?.Invoke();
         }
 
         MiniGameCommand GetCommandFromKeyboard()

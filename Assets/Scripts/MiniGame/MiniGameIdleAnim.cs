@@ -3,32 +3,36 @@ using UnityEngine;
 
 public class MiniGameIdleAnim : MonoBehaviour
 {
-    [SerializeField] Sprite idleSprite;
-    [SerializeField] int fps;
-    Sprite baseSprite;
-    SpriteRenderer rend;
+    [SerializeField] protected Sprite idleSprite;
+    [SerializeField] protected int fps;
+    protected Sprite baseSprite;
+    protected SpriteRenderer rend;
 
-    float animTimeInterval => 1f / fps;
+    protected float animTimeInterval => 1f / fps;
 
-    void Awake()
+    protected virtual Sprite AnimSprite => idleSprite;
+
+    protected void Awake()
     {
         rend = GetComponent<SpriteRenderer>();
         baseSprite = rend.sprite;
     }
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         StartCoroutine(Anim());
     }
 
-    IEnumerator Anim()
+    protected IEnumerator Anim()
     {
-        while(true)
+        while (true)
         {
-            rend.sprite = baseSprite;
+            if (!CardProcessor.Instance.isPaused)
+                rend.sprite = baseSprite;
             yield return new WaitForSeconds(animTimeInterval);
 
-            rend.sprite = idleSprite;
+            if (!CardProcessor.Instance.isPaused)
+                rend.sprite = AnimSprite;
             yield return new WaitForSeconds(animTimeInterval);
         }
     }

@@ -40,9 +40,20 @@ namespace MinigGame
             MiniGameController.onMiniGameUpdate -= OnMiniGameUpdate;
         }
 
+        private void OnDestroy()
+        {
+            MiniGameController.onGameReset -= OnGameReset;
+        }
+
         void Start()
         {
+            MiniGameController.onGameReset += OnGameReset;
             dialoguePanel.SetActive(false);
+        }
+
+        private void OnGameReset()
+        {
+            Hide();
         }
 
         private void OnMiniGameUpdate(MiniGameInput input)
@@ -68,7 +79,7 @@ namespace MinigGame
                     return;
             }
 
-            if (IsDialogueOn && !hasReactionBeenPerformed)
+            if (IsDialogueOn && !hasReactionBeenPerformed && input.HasLetter)
                 AddPlayerLetterInput(input.letter);
         }
 
@@ -108,6 +119,11 @@ namespace MinigGame
         {
             currentTalkable.LeavingDialogue(hasReactionBeenPerformed);
 
+            Hide();
+        }
+
+        void Hide()
+        {
             currentTalkable = null;
             playerInputString = "";
             hasReactionBeenPerformed = false;

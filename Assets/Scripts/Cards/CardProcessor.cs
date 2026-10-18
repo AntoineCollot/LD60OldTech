@@ -8,17 +8,40 @@ public class CardProcessor : MonoBehaviour
 {
     [SerializeField] float startTime;
     [SerializeField] float processTimeStep;
+    [SerializeField] float processTimeStepDialogue;
     [SerializeField] float processTimeStepTurbo;
-    bool isUsingTurbo;
+    bool IsUsingTurbo => turboButton.isOn;
+    public bool isRunning { get; private set; }
+    public bool isPaused { get; private set; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Buttons")]
+    [SerializeField] MachineButton runButton;
+    [SerializeField] MachineButton pauseButton;
+    [SerializeField] MachineButton turboButton;
+    [SerializeField] MachineLED errorLed;
+
+    public static CardProcessor Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         MiniGameController.onError += OnMiniGameError;
+        pauseButton.onValueChanged += OnPauseButton;
+        runButton.onValueChanged += OnRunButton;
+
+        errorLed.SetOn(false);
     }
 
     private void OnDestroy()
     {
+        if (runButton != null)
+            runButton.onValueChanged -= OnRunButton;
+        if (pauseButton != null)
+            pauseButton.onValueChanged -= OnPauseButton;
         MiniGameController.onError -= OnMiniGameError;
     }
 
@@ -28,28 +51,35 @@ public class CardProcessor : MonoBehaviour
 #if UNITY_EDITOR
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            ProcessCards();
+            Run();
         }
 #endif
     }
 
-    public void ProcessCards()
+    public bool Run()
     {
-        CardManager.Instance.SetMode(CardManager.ViewMode.Hide);
+        CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
 
         List<CardData> dataToPlay = CardManager.Instance.GetCardsToPlay();
 
         if (dataToPlay.Count == 0)
         {
-            //Wrong SFX
-            return;
+            SFXManager.PlaySound(GlobalSFX.MachineNoCard);
+            return false;
         }
 
+        pauseButton.SetOn(false);
+        MiniGameController.Instance.ResetGame();
+
+        StopAllCoroutines();
         StartCoroutine(ProcessCardsC(dataToPlay));
+
+        return true;
     }
 
     IEnumerator ProcessCardsC(List<CardData> dataToPlay)
     {
+        isRunning = true;
         yield return new WaitForSeconds(startTime);
 
         for (int i = 0; i < dataToPlay.Count; i++)
@@ -57,33 +87,83 @@ public class CardProcessor : MonoBehaviour
             yield return StartCoroutine(ProcessCard(dataToPlay[i], i == dataToPlay.Count - 1));
         }
 
+        yield return new WaitForSeconds(1);
+
+        //CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
+        runButton.SetOn(false);
+        isRunning = false;
         Debug.Log("Finished Processing!");
     }
 
     IEnumerator ProcessCard(CardData data, bool isLastCard)
     {
+        SFXManager.PlaySound(GlobalSFX.MachineCardProcessedStarted);
+
         for (int c = 0; c < CardData.COLUMN_COUNT; c++)
         {
+            errorLed.SetOn(false);
+
             int columnValue = data.GetColumnValue(c);
             MiniGameInput input = new MiniGameInput(columnValue);
             Debug.Log("Processing " + columnValue);
 
             MiniGameController.Instance.ProcessFrame(input);
 
-            if(input.id == 0)
+            if (input.id == 0)
             {
-                yield return null;
+                yield return null; //Skip 0 commands
             }
-            else if (isUsingTurbo && !isLastCard)
+            else if (IsUsingTurbo)// && !isLastCard) //Turbo only for other cards ?
                 yield return new WaitForSeconds(processTimeStepTurbo);
+            else if (input.command == MiniGameCommand.Talk)
+                yield return new WaitForSeconds(processTimeStepDialogue);
             else
                 yield return new WaitForSeconds(processTimeStep);
+
+            //Pause & end of game
+            while (isPaused || MiniGameEgg.Instance.hasBeenFound)
+            {
+                yield return null;
+                continue;
+            }
         }
+
+        CardManager.Instance.SetProcessedCardPosition(data); //Set card position after processing
+        SFXManager.PlaySound(GlobalSFX.MachineCardProcessedFinished);
     }
 
     private void OnMiniGameError()
     {
         //SFX & FX
+        errorLed.SetOn(true);
         Debug.Log("Mini Game Error");
+    }
+
+    public void StopRun()
+    {
+        isRunning = false;
+        StopAllCoroutines();
+    }
+
+    private void OnRunButton(bool isOn)
+    {
+        if (isOn)
+        {
+            bool canRun = Run();
+            if (!canRun)
+                Invoke("ResetRunButtonDelayed", 0.1f);
+        }
+        else
+            StopRun();
+    }
+
+    void ResetRunButtonDelayed()
+    {
+        runButton.SetOn(false);
+    }
+
+    private void OnPauseButton(bool isOn)
+    {
+        isPaused = isOn;
     }
 }
