@@ -15,7 +15,9 @@ public class CardData
     public CardData(int id)
     {
         punches = new bool[COLUMN_COUNT, DIGIT_COUNT];
-        texture = new Texture2D(12, 5, TextureFormat.ARGB32, false);
+        texture = new Texture2D(12, 5, TextureFormat.RGB24, false,true);
+        texture.filterMode = FilterMode.Point;
+        texture.wrapMode = TextureWrapMode.Clamp;
         isEmpty = true;
         description = "GameCard " + id;
         ClearTexture();

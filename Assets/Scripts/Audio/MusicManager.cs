@@ -7,6 +7,8 @@ public class MusicManager : MonoBehaviour
     AudioSource source;
     bool isMuted;
 
+    [SerializeField] MachineButton muteButton;
+
     public static MusicManager Instance;
 
     // Start is called before the first frame update
@@ -21,6 +23,20 @@ public class MusicManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         source = GetComponent<AudioSource>();
+
+        muteButton.onValueChanged += OnValueChanged;
+        muteButton.SetOnWithoutNotifying(false);
+    }
+
+    private void OnDestroy()
+    {
+        if(muteButton!=null)
+            muteButton.onValueChanged -= OnValueChanged;
+    }
+
+    private void OnValueChanged(bool isOn)
+    {
+        Mute(isOn);
     }
 
     public void Mute(bool value)

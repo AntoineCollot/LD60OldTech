@@ -106,6 +106,9 @@ public class Card : MonoBehaviour, ISelectable
 
     public void OnHoverEnter()
     {
+        if (MainMenu.Instance.IsActive)
+            return;
+
         if (!isSelected)
         {
             cardRend.material.SetFloat(HOVER_PROPERTY, 1);

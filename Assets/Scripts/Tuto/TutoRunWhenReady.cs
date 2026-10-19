@@ -13,7 +13,7 @@ public class TutoRunWhenReady : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.enabled = CardManager.Instance.cardOrders != null && CardManager.Instance.cardOrders.Count > 0;
+        text.enabled = CardManager.Instance.cardOrders != null && CardManager.Instance.cardOrders.Count > 0 && !MainMenu.Instance.IsActive;
 
         if (CardProcessor.Instance.isRunning && text.enabled)
             gameObject.SetActive(false);

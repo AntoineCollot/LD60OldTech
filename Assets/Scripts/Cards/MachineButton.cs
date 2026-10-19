@@ -65,6 +65,8 @@ public class MachineButton : MonoBehaviour, ISelectable
 
     public void OnSelect(Vector2 uv)
     {
+        if (MainMenu.Instance.IsActive)
+            return;
         ToggleOn();
     }
 }

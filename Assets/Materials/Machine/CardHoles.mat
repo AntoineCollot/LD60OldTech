@@ -47,6 +47,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EmptyAmount: 0
     - _GridMultX: 1.048
     - _GridMultY: 1.435
     - _GridSizeX: 0.0409

@@ -110,6 +110,7 @@ public class CardProcessor : MonoBehaviour
     IEnumerator ProcessCard(CardData data, bool isLastCard)
     {
         SFXManager.PlaySound(GlobalSFX.MachineCardProcessedStarted);
+        bool hasData = false;
 
         for (int c = 0; c < CardData.COLUMN_COUNT; c++)
         {
@@ -120,6 +121,8 @@ public class CardProcessor : MonoBehaviour
             Debug.Log("Processing " + columnValue);
 
             MiniGameController.Instance.ProcessFrame(input);
+
+            hasData |= (input.id != 0);
 
             if (input.id == 0)
             {
@@ -141,7 +144,9 @@ public class CardProcessor : MonoBehaviour
         }
 
         CardManager.Instance.SetProcessedCardPosition(data); //Set card position after processing
-        SFXManager.PlaySound(GlobalSFX.MachineCardProcessedFinished);
+
+        if (hasData)
+            SFXManager.PlaySound(GlobalSFX.MachineCardProcessedFinished);
     }
 
     private void OnMiniGameError()
@@ -185,5 +190,14 @@ public class CardProcessor : MonoBehaviour
     private void OnPauseButton(bool isOn)
     {
         isPaused = isOn;
+
+        if (isRunning && !isFinishedButRunning && !isPaused)
+        {
+            source.Play();
+        }
+        if (isPaused)
+        {
+            source.Stop();
+        }
     }
 }

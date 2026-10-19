@@ -8,6 +8,14 @@ public class MainMenu : MonoBehaviour
     bool isFading;
     [SerializeField] float fadetime = 2;
     [SerializeField] GameObject panel;
+    public bool IsActive => panel.activeSelf;
+
+    public static MainMenu Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -17,8 +25,13 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.isPressed && Time.time > 3 && !isFading)
+#if !UNITY_EDITOR
+        if (Mouse.current.leftButton.isPressed && Time.time > 1 && !isFading)
             StartCoroutine(FadeAway());
+#else
+        if (Mouse.current.leftButton.isPressed)
+            panel.SetActive(false);
+#endif
     }
 
     IEnumerator FadeAway()

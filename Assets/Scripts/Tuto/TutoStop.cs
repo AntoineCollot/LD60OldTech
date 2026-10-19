@@ -8,13 +8,14 @@ public class TutoStop : MonoBehaviour
     void Start()
     {
         text =GetComponent<TextMeshProUGUI>();
+        text.enabled = false;
     }
 
     void Update()
     {
-        text.enabled = CardProcessor.Instance.isFinishedButRunning;
-
         if (!CardProcessor.Instance.isRunning && text.enabled)
             gameObject.SetActive(false);
+
+        text.enabled = CardProcessor.Instance.isFinishedButRunning;
     }
 }
