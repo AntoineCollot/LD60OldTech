@@ -25,6 +25,7 @@ public class CardManager : MonoBehaviour
     int selectedCardID;
     int lastSelectedCardID;//use for calling the delete card as the card is being deselected
     public bool HasSelectedCard => selectedCardID >= 0;
+    public bool SelectedCardIsEmpty => cardData[selectedCardID].isEmpty;
 
     //Hover Hole
     Card hoveredHoleCard;

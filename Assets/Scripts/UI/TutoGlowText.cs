@@ -9,12 +9,14 @@ public class TutoGlowText : MonoBehaviour
     [SerializeField] float freq = 10;
     [SerializeField] bool isOnByDefault;
     TextMeshProUGUI text;
+    Color baseColor;
 
     bool isGlowing;
 
     void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
+        baseColor = text.color;
     }
 
     private void OnEnable()
@@ -41,6 +43,7 @@ public class TutoGlowText : MonoBehaviour
             return;
         StopAllCoroutines();
         isGlowing = false;
+        text.color = baseColor;
     }
 
     IEnumerator GlowC()
