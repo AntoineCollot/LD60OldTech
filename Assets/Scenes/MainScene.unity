@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f337af8251636e9449ff2e050e3cb8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CamLookMouse
-  maxAngle: 1.5
+  maxAngle: 1.7
   centerRange: 0.15
 --- !u!114 &253007659
 MonoBehaviour:
@@ -769,6 +769,7 @@ MonoBehaviour:
   hidePosition: {fileID: 1613280148}
   selectedPosition: {fileID: 988870961}
   processedCardPosition: {fileID: 467671346}
+  processingCardPosition: {fileID: 1269560576}
   cardOrders: 
 --- !u!4 &292064656
 Transform:
@@ -3529,6 +3530,37 @@ Transform:
   - {fileID: 1386761684}
   m_Father: {fileID: 5170490236287827277}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1269560575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1269560576}
+  m_Layer: 0
+  m_Name: CardProcessingPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1269560576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269560575}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.083694756, y: -0, z: -0, w: 0.99649143}
+  m_LocalPosition: {x: 0.852, y: 0.192, z: 0.544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450651919432054}
+  m_LocalEulerAnglesHint: {x: -9.602, y: 0, z: 0}
 --- !u!1 &1272830214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5962,6 +5994,7 @@ Transform:
   - {fileID: 1942823760042768702}
   - {fileID: 8891792826367583443}
   - {fileID: 467671346}
+  - {fileID: 1269560576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &623794275497897778 stripped

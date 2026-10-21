@@ -13,6 +13,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform hidePosition;
     [SerializeField] Transform selectedPosition;
     [SerializeField] Transform processedCardPosition;
+    [SerializeField] Transform processingCardPosition;
     CardIdlePosition[] idleCardPosition;
     const int CARD_COUNT = 12;
 
@@ -209,6 +210,15 @@ public class CardManager : MonoBehaviour
 
         return dataToPlay;
     }
+
+    public void SetProcessingCardPosition()
+    {
+        for (int i = 0; i < cardObjects.Length; i++)
+        {
+            cardObjects[i].SetPosition(processingCardPosition, false);
+        }
+    }
+
     public void SetProcessedCardPosition(CardData data)
     {
         int id = Array.IndexOf(cardData, data);

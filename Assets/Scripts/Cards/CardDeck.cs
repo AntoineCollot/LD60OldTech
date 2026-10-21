@@ -17,4 +17,14 @@ public class CardDeck : Card
     public override void OnRightClick()
     {
     }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        bool shouldBeVisible = !CardProcessor.Instance.isRunning;
+        cardRend.enabled = shouldBeVisible;
+        holesRend.enabled = shouldBeVisible;
+        text.enabled = shouldBeVisible;
+    }
 }

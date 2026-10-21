@@ -25,16 +25,20 @@ public class Card : MonoBehaviour, ISelectable
     const float PUNCH_OFFSETX = 19f / TEXTURE_SIZE;
     const float PUNCH_OFFSETY = 83f / TEXTURE_SIZE;
     const int TEXTURE_SIZE = 1024;
+    const float DISTANCE_OFFSET_BY_ID = 0.005f;
 
     protected static readonly int HOLE_TEX_PROPERTY = Shader.PropertyToID("_HoleTex");
     protected static readonly int EMPTY_PROPERTY = Shader.PropertyToID("_EmptyAmount");
     protected static readonly int HOVER_PROPERTY = Shader.PropertyToID("_HoverAmount");
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (targetPosition == null)
             return;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition.position, ref refPos, SMOOTH);
+        Vector3 effectiveTargetPos = targetPosition.position;
+        if (!CardManager.Instance.IsInViewMode)
+            effectiveTargetPos -= targetPosition.forward * DISTANCE_OFFSET_BY_ID * id; //small offset to avoid z fighting when stacked
+        transform.position = Vector3.SmoothDamp(transform.position, effectiveTargetPos, ref refPos, SMOOTH);
         currentRot = QuaternionUtils.SmoothDamp(currentRot, targetPosition.rotation * Quaternion.Euler(rotationOffset), ref refRot, SMOOTH);
         transform.rotation = currentRot;
     }

@@ -91,6 +91,8 @@ public class CardProcessor : MonoBehaviour
         isRunning = true;
         yield return new WaitForSeconds(startTime);
 
+        CardManager.Instance.SetProcessingCardPosition();
+
         for (int i = 0; i < dataToPlay.Count; i++)
         {
             yield return StartCoroutine(ProcessCard(dataToPlay[i], i == dataToPlay.Count - 1));
@@ -161,6 +163,7 @@ public class CardProcessor : MonoBehaviour
         if (isRunning)
             SFXManager.PlaySound(GlobalSFX.ScreenOf);
 
+        CardManager.Instance.SetMode(CardManager.ViewMode.Hide, true);
         MusicManager.Instance.StopMusic();
         isRunning = false;
         source.Stop();
